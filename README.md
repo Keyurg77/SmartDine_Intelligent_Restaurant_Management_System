@@ -1,3 +1,4 @@
+# SmartDine_Intelligent_Restaurant_Management_System
 # SmartDine: Intelligent Restaurant Management System
 
 SmartDine is a full-stack restaurant management web application for ICT203
@@ -78,13 +79,20 @@ npm install
 
 2. Copy `.env.example` to `.env` and update database credentials.
 
-3. Start the development server:
+3. Create the database in MySQL:
+
+```bash
+mysql -u root -p < database/schema.sql
+mysql -u root -p smartdine_db < database/seed.sql
+```
+
+4. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-4. Open:
+5. Open:
 
 ```text
 http://localhost:3000
@@ -100,3 +108,4 @@ SmartDine Assistant is a rule-based chatbot. It answers user questions about
 menu items, food categories, ordering steps, order status, and restaurant help.
 It uses local application rules and database information, not an external AI
 service.
+

@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const { env } = require('./config/env');
 const webRoutes = require('./routes/web.routes');
 const apiRoutes = require('./routes/api.routes');
+const { attachCurrentUser } = require('./middleware/auth.middleware');
 const { notFound, errorHandler } = require('./middleware/error.middleware');
 
 const app = express();
@@ -33,9 +34,10 @@ app.use(
 );
 
 app.use(flash());
+app.use(attachCurrentUser);
 app.use((req, res, next) => {
   res.locals.appName = env.appName;
-  res.locals.currentUser = req.session.user || null;
+  res.locals.currentUser = req.currentUser;
   res.locals.messages = {
     success: req.flash('success'),
     error: req.flash('error'),
