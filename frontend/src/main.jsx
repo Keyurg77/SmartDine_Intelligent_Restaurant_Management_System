@@ -261,7 +261,7 @@ function App() {
     }
   }
 
-  function askAssistant(event) {
+  async function askAssistant(event) {
     event.preventDefault();
     await submitAssistantMessage(chatInput);
   }
@@ -270,14 +270,7 @@ function App() {
     const text = message.trim();
     if (!text) return;
 
-    setChatMessages((messages) => [
-      ...messages,
-      { from: 'user', text },
-      { from: 'assistant', text: createAssistantReply(text) },
-    ]);
     setChatInput('');
-<<<<<<< Updated upstream
-=======
     setChatMessages((messages) => [...messages, { from: 'user', text }]);
 
     try {
@@ -289,7 +282,6 @@ function App() {
     } catch (error) {
       setChatMessages((messages) => [...messages, { from: 'assistant', text: createAssistantReply(text) }]);
     }
->>>>>>> Stashed changes
   }
 
   function sendQuickAssistantMessage(text) {
@@ -471,8 +463,6 @@ function createAssistantReply(question) {
   return 'I can help with menu search, ordering steps, order status, spice levels, and admin support.';
 }
 
-<<<<<<< Updated upstream
-=======
 function playAddSound() {
   try {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -495,5 +485,4 @@ function playAddSound() {
   }
 }
 
->>>>>>> Stashed changes
 createRoot(document.getElementById('root')).render(<App />);
