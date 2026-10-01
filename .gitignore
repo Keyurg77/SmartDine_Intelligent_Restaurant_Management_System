@@ -141,3 +141,7 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Local testing evidence screenshots kept out until final documentation
+/docs/evidence/*
+!/docs/evidence/.gitkeep
