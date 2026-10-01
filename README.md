@@ -1,6 +1,4 @@
-<<<<<<< Updated upstream
 # SmartDine_Intelligent_Restaurant_Management_System
-=======
 # SmartDine: Intelligent Restaurant Management System
 
 SmartDine is a full-stack restaurant management web application for ICT203
@@ -110,4 +108,4 @@ SmartDine Assistant is a rule-based chatbot. It answers user questions about
 menu items, food categories, ordering steps, order status, and restaurant help.
 It uses local application rules and database information, not an external AI
 service.
->>>>>>> Stashed changes
+
