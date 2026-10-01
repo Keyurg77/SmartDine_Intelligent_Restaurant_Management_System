@@ -273,20 +273,11 @@ function App() {
     setChatInput('');
     setChatMessages((messages) => [...messages, { from: 'user', text }]);
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
     try {
       const result = await apiRequest('/chatbot/message', {
         method: 'POST',
         body: JSON.stringify({ message: text }),
       });
-<<<<<<< Updated upstream
-      setChatMessages((messages) => [...messages, { from: 'assistant', options: result.options || [], text: result.reply }]);
-    } catch (error) {
-      setChatMessages((messages) => [...messages, { from: 'assistant', text: createAssistantReply(text) }]);
-=======
       setChatMessages((messages) => [
         ...messages,
         { from: 'assistant', options: result.options || [], text: result.reply },
@@ -296,36 +287,12 @@ function App() {
         ...messages,
         { from: 'assistant', text: createAssistantReply(text) },
       ]);
->>>>>>> Stashed changes
     }
   }
 
   function sendQuickAssistantMessage(text) {
     submitAssistantMessage(text);
   }
-<<<<<<< Updated upstream
-=======
-try {
-  const result = await apiRequest('/chatbot/message', {
-    method: 'POST',
-    body: JSON.stringify({ message: text }),
-  });
-  setChatMessages((messages) => [
-    ...messages,
-    { from: 'assistant', options: result.options || [], text: result.reply },
-  ]);
-} catch (error) {
-  setChatMessages((messages) => [
-    ...messages,
-    { from: 'assistant', text: createAssistantReply(text) },
-  ]);
-}
-function sendQuickAssistantMessage(text) {
-  submitAssistantMessage(text);
-}
->>>>>>> 080f34c2e10f12debcf7d49c3d75fdbca57d857b
-=======
->>>>>>> Stashed changes
 
   return (
     <div className="app-shell">
@@ -501,11 +468,6 @@ function createAssistantReply(question) {
   if (text.includes('admin')) return 'Admins can manage menu items and update order status from the admin dashboard.';
   return 'I can help with menu search, ordering steps, order status, spice levels, and admin support.';
 }
-
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
 function playAddSound() {
   try {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -527,11 +489,6 @@ function playAddSound() {
     // Audio feedback is optional and may be blocked by browser settings.
   }
 }
-
-<<<<<<< Updated upstream
-=======
->>>>>>> 080f34c2e10f12debcf7d49c3d75fdbca57d857b
-=======
->>>>>>> Stashed changes
 createRoot(document.getElementById('root')).render(<App />);
+
 
