@@ -62,6 +62,10 @@ const getOrder = asyncHandler(async (req, res) => {
 });
 
 const createOrder = asyncHandler(async (req, res) => {
+  if (req.currentUser.role !== 'customer') {
+    return res.status(403).json({ message: 'Only customer accounts can create orders.' });
+  }
+
   const items = Array.isArray(req.body.items) ? req.body.items : [];
   const customerNote = String(req.body.customerNote || '').trim() || null;
 

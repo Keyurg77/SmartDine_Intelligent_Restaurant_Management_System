@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node backend/src/server.js",
     "dev": "nodemon backend/src/server.js",
+    "dev:backend": "nodemon backend/src/server.js",
+    "dev:frontend": "npm --prefix frontend run dev",
     "frontend": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
     "lint": "node --check backend/src/server.js && node --check backend/src/app.js"
