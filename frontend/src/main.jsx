@@ -139,17 +139,26 @@ function App() {
     });
   }
 
-  function askAssistant(event) {
+  async function askAssistant(event) {
     event.preventDefault();
     const text = chatInput.trim();
     if (!text) return;
 
-    setChatMessages((messages) => [
-      ...messages,
-      { from: 'user', text },
-      { from: 'assistant', text: createAssistantReply(text) },
-    ]);
     setChatInput('');
+    setChatMessages((messages) => [...messages, { from: 'user', text }]);
+
+    try {
+      const result = await apiRequest('/chatbot/message', {
+        method: 'POST',
+        body: JSON.stringify({ message: text }),
+      });
+      setChatMessages((messages) => [...messages, { from: 'assistant', text: result.reply }]);
+    } catch (error) {
+      setChatMessages((messages) => [
+        ...messages,
+        { from: 'assistant', text: createAssistantReply(text) },
+      ]);
+    }
   }
 
   return (
@@ -450,3 +459,4 @@ function createAssistantReply(question) {
 }
 
 createRoot(document.getElementById('root')).render(<App />);
+
