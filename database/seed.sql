@@ -2,8 +2,8 @@ USE smartdine_db;
 
 INSERT INTO users (full_name, email, password_hash, role)
 VALUES
-  ('SmartDine Admin', 'admin@smartdine.test', '$2b$10$examplehashforassessmentonlyadmin', 'admin'),
-  ('Demo Customer', 'customer@smartdine.test', '$2b$10$examplehashforassessmentonlycustomer', 'customer');
+  ('SmartDine Admin', 'admin@smartdine.test', '$2b$10$/z.teGIIlWsZd41.em6C.O7Y3lWnh55Ip.Q.Mlwh35Z7qojaQOEQW', 'admin'),
+  ('Demo Customer', 'customer@smartdine.test', '$2b$10$DCLvpiCUg64flemwH9KTeu92yJ7nULbJjAKvv6hss0VXPL.ErI6OG', 'customer');
 
 INSERT INTO categories (name, description)
 VALUES
@@ -57,3 +57,4 @@ INSERT INTO activity_logs (user_id, action, entity_type, entity_id, details)
 VALUES
   (1, 'CREATE', 'menu_item', 1, 'Initial menu seed data added.'),
   (2, 'CREATE', 'order', 1, 'Demo customer placed sample order SD-1001.');
+

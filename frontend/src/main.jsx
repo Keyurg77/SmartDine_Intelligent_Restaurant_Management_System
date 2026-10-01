@@ -273,6 +273,22 @@ function App() {
     setChatInput('');
     setChatMessages((messages) => [...messages, { from: 'user', text }]);
 
+<<<<<<< HEAD
+    try {
+      const result = await apiRequest('/chatbot/message', {
+        method: 'POST',
+        body: JSON.stringify({ message: text }),
+      });
+      setChatMessages((messages) => [...messages, { from: 'assistant', options: result.options || [], text: result.reply }]);
+    } catch (error) {
+      setChatMessages((messages) => [...messages, { from: 'assistant', text: createAssistantReply(text) }]);
+    }
+  }
+
+  function sendQuickAssistantMessage(text) {
+    submitAssistantMessage(text);
+  }
+=======
 try {
   const result = await apiRequest('/chatbot/message', {
     method: 'POST',
@@ -291,6 +307,7 @@ try {
 function sendQuickAssistantMessage(text) {
   submitAssistantMessage(text);
 }
+>>>>>>> 080f34c2e10f12debcf7d49c3d75fdbca57d857b
 
   return (
     <div className="app-shell">
@@ -467,5 +484,30 @@ function createAssistantReply(question) {
   return 'I can help with menu search, ordering steps, order status, spice levels, and admin support.';
 }
 
+<<<<<<< HEAD
+function playAddSound() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const context = new AudioContext();
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(880, context.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(1320, context.currentTime + 0.08);
+    gain.gain.setValueAtTime(0.0001, context.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.18, context.currentTime + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.16);
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start();
+    oscillator.stop(context.currentTime + 0.17);
+  } catch (error) {
+    // Audio feedback is optional and may be blocked by browser settings.
+  }
+}
+
+=======
+>>>>>>> 080f34c2e10f12debcf7d49c3d75fdbca57d857b
 createRoot(document.getElementById('root')).render(<App />);
 
