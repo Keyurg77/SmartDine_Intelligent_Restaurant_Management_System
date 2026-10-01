@@ -10,7 +10,7 @@
     "dev:frontend": "npm --prefix frontend run dev",
     "frontend": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
-    "lint": "node --check backend/src/server.js && node --check backend/src/app.js"
+    "lint": "node --check backend/src/server.js && node --check backend/src/app.js && node --check backend/src/routes/api.routes.js && node --check backend/src/controllers/auth.controller.js && node --check backend/src/controllers/chatbot.controller.js && node --check backend/src/controllers/menu.controller.js && node --check backend/src/controllers/order.controller.js && node --check backend/src/middleware/auth.middleware.js && node --check backend/src/middleware/error.middleware.js"
   },
   "keywords": [
     "restaurant",
