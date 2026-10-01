@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= pageTitle %> | <%= appName %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="/">SmartDine</a>
+        <div class="nav-links" aria-label="Primary navigation">
+          <a href="/">Home</a>
+          <a href="/menu">Menu</a>
+          <a href="/orders">Orders</a>
+          <a href="/assistant">Assistant</a>
+          <a href="/login">Login</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <%- body %>
+    </main>
+
+    <footer class="site-footer">
+      <p>SmartDine Intelligent Restaurant Management System</p>
+    </footer>
+  </body>
+</html>
