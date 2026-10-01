@@ -273,6 +273,7 @@ function App() {
     setChatInput('');
     setChatMessages((messages) => [...messages, { from: 'user', text }]);
 
+<<<<<<< HEAD
     try {
       const result = await apiRequest('/chatbot/message', {
         method: 'POST',
@@ -287,6 +288,26 @@ function App() {
   function sendQuickAssistantMessage(text) {
     submitAssistantMessage(text);
   }
+=======
+try {
+  const result = await apiRequest('/chatbot/message', {
+    method: 'POST',
+    body: JSON.stringify({ message: text }),
+  });
+  setChatMessages((messages) => [
+    ...messages,
+    { from: 'assistant', options: result.options || [], text: result.reply },
+  ]);
+} catch (error) {
+  setChatMessages((messages) => [
+    ...messages,
+    { from: 'assistant', text: createAssistantReply(text) },
+  ]);
+}
+function sendQuickAssistantMessage(text) {
+  submitAssistantMessage(text);
+}
+>>>>>>> 080f34c2e10f12debcf7d49c3d75fdbca57d857b
 
   return (
     <div className="app-shell">
@@ -463,6 +484,7 @@ function createAssistantReply(question) {
   return 'I can help with menu search, ordering steps, order status, spice levels, and admin support.';
 }
 
+<<<<<<< HEAD
 function playAddSound() {
   try {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -485,4 +507,7 @@ function playAddSound() {
   }
 }
 
+=======
+>>>>>>> 080f34c2e10f12debcf7d49c3d75fdbca57d857b
 createRoot(document.getElementById('root')).render(<App />);
+

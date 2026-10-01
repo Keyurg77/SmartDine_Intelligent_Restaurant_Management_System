@@ -2,6 +2,7 @@ const express = require('express');
 const authController = require('../controllers/auth.controller');
 const menuController = require('../controllers/menu.controller');
 const orderController = require('../controllers/order.controller');
+const chatbotController = require('../controllers/chatbot.controller');
 const { requireAuth, requireRole } = require('../middleware/auth.middleware');
 
 const router = express.Router();
@@ -30,4 +31,7 @@ router.post('/orders', requireAuth, orderController.createOrder);
 router.get('/orders/:id', requireAuth, orderController.getOrder);
 router.patch('/orders/:id/status', requireAuth, requireRole('admin'), orderController.updateOrderStatus);
 
+router.post('/chatbot/message', chatbotController.sendMessage);
+
 module.exports = router;
+
