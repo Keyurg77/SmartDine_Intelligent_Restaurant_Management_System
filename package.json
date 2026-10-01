@@ -1,0 +1,35 @@
+{
+  "name": "smartdine-intelligent-restaurant-management-system",
+  "version": "1.0.0",
+  "description": "SmartDine is a Node.js, Express, MySQL, and React restaurant ordering system with a rule-based chatbot assistant.",
+  "main": "backend/src/server.js",
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "dev": "nodemon backend/src/server.js",
+    "frontend": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "lint": "node --check backend/src/server.js && node --check backend/src/app.js"
+  },
+  "keywords": [
+    "restaurant",
+    "express",
+    "mysql",
+    "react",
+    "chatbot",
+    "ict203"
+  ],
+  "author": "SmartDine Team",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "helmet": "^7.1.0",
+    "mysql2": "^3.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
