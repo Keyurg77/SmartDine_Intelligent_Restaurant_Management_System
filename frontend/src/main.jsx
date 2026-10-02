@@ -30,8 +30,10 @@ const demoMenu = [
   { id: 5, name: 'Chocolate Brownie', categoryName: 'Desserts', description: 'Warm brownie with chocolate sauce.', price: 7, spiceLevel: 'none' },
 ];
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
+
 async function apiRequest(path, options = {}) {
-  const response = await fetch(`/api${path}`, {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
