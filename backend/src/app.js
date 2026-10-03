@@ -11,10 +11,33 @@ const { notFound, errorHandler } = require('./middleware/error.middleware');
 
 const app = express();
 
+app.set('trust proxy', 1);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', '..', 'frontend', 'views'));
 
 app.use(helmet({ contentSecurityPolicy: false }));
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    env.frontendUrl,
+    'http://127.0.0.1:5173',
+    'http://localhost:5173',
+  ].filter(Boolean);
+  const origin = req.headers.origin;
+
+  if (origin && allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Vary', 'Origin');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+  }
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+
+  return next();
+});
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', '..', 'frontend', 'public')));
@@ -27,7 +50,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: env.nodeEnv === 'production' ? 'none' : 'lax',
       secure: env.nodeEnv === 'production',
     },
   })

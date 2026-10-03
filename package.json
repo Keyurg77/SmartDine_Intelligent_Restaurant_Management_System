@@ -1,17 +1,25 @@
 {
   "name": "smartdine-intelligent-restaurant-management-system",
   "version": "1.0.0",
-  "description": "SmartDine is a Node.js, Express, and MySQL restaurant management system with menu ordering and a rule-based chatbot assistant.",
+  "description": "SmartDine is a Node.js, Express, MySQL, and React restaurant ordering system with a rule-based chatbot assistant.",
   "main": "backend/src/server.js",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "start": "node backend/src/server.js",
     "dev": "nodemon backend/src/server.js",
-    "lint": "node --check backend/src/server.js && node --check backend/src/app.js"
+    "dev:backend": "nodemon backend/src/server.js",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "frontend": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "lint": "node --check backend/src/server.js && node --check backend/src/app.js && node --check backend/src/routes/api.routes.js && node --check backend/src/controllers/auth.controller.js && node --check backend/src/controllers/chatbot.controller.js && node --check backend/src/controllers/menu.controller.js && node --check backend/src/controllers/order.controller.js && node --check backend/src/middleware/auth.middleware.js && node --check backend/src/middleware/error.middleware.js"
   },
   "keywords": [
     "restaurant",
     "express",
     "mysql",
+    "react",
     "chatbot",
     "ict203"
   ],
@@ -21,9 +29,8 @@
     "bcrypt": "^5.1.1",
     "connect-flash": "^0.1.1",
     "dotenv": "^16.4.5",
-    "ejs": "^3.1.10",
+    "ejs": "^6.0.1",
     "express": "^4.19.2",
-    "express-mysql-session": "^3.0.2",
     "express-session": "^1.18.0",
     "helmet": "^7.1.0",
     "mysql2": "^3.11.0"

@@ -1,111 +1,124 @@
-# SmartDine_Intelligent_Restaurant_Management_System
 # SmartDine: Intelligent Restaurant Management System
 
-SmartDine is a full-stack restaurant management web application for ICT203
-Assessment 3. The system focuses on menu browsing, food ordering, admin menu
-management, order status tracking, and a simple rule-based SmartDine Assistant
-chatbot.
+SmartDine is a full-stack restaurant management web application built for ICT203 Assessment 3. It supports menu browsing, customer ordering, role-based admin access, order status management, and a rule-based SmartDine Assistant chatbot.
 
 ## Technology Stack
 
-- Node.js
-- Express.js
+- React with Vite
+- Node.js and Express.js
 - MySQL
-- EJS templates
 - HTML, CSS, JavaScript
 
-## Current Project Scope
+## Project Scope
 
 Included:
 
-- User authentication and role-based access
-- Menu category and menu item management
-- Food ordering workflow
-- Order status management
-- Search and filtering for menu items
-- Activity/audit logging
-- SmartDine Assistant chatbot
-- Testing and documentation evidence
+- Customer registration and login
+- Admin login
+- Role-based access control
+- Live menu loading from the MySQL database
+- Menu search and category filtering
+- Customer cart and order creation
+- Admin menu item creation
+- Admin order status updates
+- Rule-based chatbot assistant
+- Activity logging for important actions
 
-Not included for the current version:
-
-- Table reservations
-- Delivery driver management
-- Payment gateway integration
-- External AI API integration
-
-## Project Structure
+## Folder Structure
 
 ```text
-backend/
-  src/
-    config/
-    middleware/
-    routes/
-    app.js
-    server.js
-frontend/
-  public/
-    css/
-    js/
-  views/
-    pages/
-    partials/
-database/
-docs/
+backend/      Express API, controllers, middleware, routes, and database config
+frontend/     React/Vite user interface
+database/     MySQL schema and seed data
+docs/         Local assessment evidence and draft documents, ignored by Git
 ```
 
-## Branch Workflow
-
-Main branches:
-
-- `feature/project-setups`
-- `feature/database`
-- `feature/backend`
-- `feature/frontend`
-- `feature/chatbot`
-- `feature/testing-docs`
-
-Each feature should be uploaded by the assigned team member using their own
-GitHub account, then merged into `main` through a pull request.
-
-## Setup
+## Local Setup
 
 1. Install dependencies:
 
 ```bash
 npm install
+npm --prefix frontend install
 ```
 
-2. Copy `.env.example` to `.env` and update database credentials.
-
-3. Create the database in MySQL:
-
-```bash
-mysql -u root -p < database/schema.sql
-mysql -u root -p smartdine_db < database/seed.sql
-```
-
-4. Start the development server:
-
-```bash
-npm run dev
-```
-
-5. Open:
+2. Create a local `.env` file from `.env.example` and update the MySQL password:
 
 ```text
-http://localhost:3000
+DB_USER=root
+DB_PASSWORD=root
+DB_NAME=smartdine_db
+```
+
+3. Run the database scripts in MySQL Workbench:
+
+```text
+database/schema.sql
+database/seed.sql
+```
+
+4. Start the backend:
+
+```bash
+npm run dev:backend
+```
+
+5. Start the frontend:
+
+```bash
+npm run dev:frontend
+```
+
+6. Open the frontend:
+
+```text
+http://127.0.0.1:5173
+```
+
+
+## Deployment
+
+Live frontend:
+
+```text
+https://smartdine7.netlify.app
+```
+
+Backend API:
+
+```text
+https://smartdine-api-c2k7.onrender.com
+```
+
+Health check:
+
+```text
+https://smartdine-api-c2k7.onrender.com/api/health
 ```
 
 ## Demo Accounts
 
-Demo accounts will be added after the database seed data is completed.
+Admin:
 
-## Intelligent Feature
+```text
+Email: admin@smartdine.test
+Password: Admin@123
+```
 
-SmartDine Assistant is a rule-based chatbot. It answers user questions about
-menu items, food categories, ordering steps, order status, and restaurant help.
-It uses local application rules and database information, not an external AI
-service.
+Customer:
 
+```text
+Email: customer@smartdine.test
+Password: Customer@123
+```
+
+## SmartDine Assistant
+
+The assistant is rule-based. It can answer questions about menu items, spice levels, food recommendations, ordering steps, order status, and basic account context. It does not call an external AI service.
+
+## Development Notes
+
+- Admin users can manage menu items and update order status, but cannot create customer orders.
+- Customer users can browse the menu and place orders.
+- The chatbot appears as a popup on the bottom-right of the application.
+- Local evidence screenshots and report drafts should stay inside `docs/`, which is ignored until reviewed.
