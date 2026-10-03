@@ -36,12 +36,12 @@ const listOrders = asyncHandler(async (req, res) => {
 const getOrder = asyncHandler(async (req, res) => {
   const id = toPositiveInteger(Number(req.params.id));
   if (!id) {
-    return res.status(400).json({ message: 'Valid order id is required.' });
+    return res.status(400).json({ message: 'Please provide a valid order id.' });
   }
 
   const order = await findVisibleOrder(id, req.currentUser);
   if (!order) {
-    return res.status(404).json({ message: 'Order not found.' });
+    return res.status(404).json({ message: 'Order was not found for this account.' });
   }
 
   const [items] = await pool.execute(
@@ -62,11 +62,18 @@ const getOrder = asyncHandler(async (req, res) => {
 });
 
 const createOrder = asyncHandler(async (req, res) => {
+<<<<<<< Updated upstream
+=======
+  if (req.currentUser.role !== 'customer') {
+    return res.status(403).json({ message: 'Only customer accounts can place food orders.' });
+  }
+
+>>>>>>> Stashed changes
   const items = Array.isArray(req.body.items) ? req.body.items : [];
   const customerNote = String(req.body.customerNote || '').trim() || null;
 
   if (items.length === 0) {
-    return res.status(400).json({ message: 'At least one order item is required.' });
+    return res.status(400).json({ message: 'Please add at least one menu item before placing an order.' });
   }
 
   const parsedItems = items.map((item) => ({
@@ -75,7 +82,7 @@ const createOrder = asyncHandler(async (req, res) => {
   }));
 
   if (parsedItems.some((item) => !item.menuItemId || !item.quantity)) {
-    return res.status(400).json({ message: 'Each order item needs a valid menu item and quantity.' });
+    return res.status(400).json({ message: 'Each order item must include a valid menu item and quantity.' });
   }
 
   const connection = await pool.getConnection();
@@ -94,7 +101,7 @@ const createOrder = asyncHandler(async (req, res) => {
 
     if (menuItems.length !== menuItemIds.length) {
       await connection.rollback();
-      return res.status(400).json({ message: 'One or more menu items are unavailable.' });
+      return res.status(400).json({ message: 'One or more selected menu items are unavailable. Please refresh the menu and try again.' });
     }
 
     const menuById = new Map(menuItems.map((item) => [item.id, item]));
@@ -148,13 +155,13 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
   const status = String(req.body.status || '').trim();
 
   if (!id || !allowedStatuses.has(status)) {
-    return res.status(400).json({ message: 'Valid order id and status are required.' });
+    return res.status(400).json({ message: 'Please provide a valid order id and supported order status.' });
   }
 
   const [result] = await pool.execute('UPDATE orders SET status = ? WHERE id = ?', [status, id]);
 
   if (result.affectedRows === 0) {
-    return res.status(404).json({ message: 'Order not found.' });
+    return res.status(404).json({ message: 'Order was not found, so the status was not changed.' });
   }
 
   await logActivity({
