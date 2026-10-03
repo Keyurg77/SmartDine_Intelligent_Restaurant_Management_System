@@ -75,6 +75,27 @@ npm run dev:frontend
 http://127.0.0.1:5173
 ```
 
+
+## Deployment
+
+Live frontend:
+
+```text
+https://smartdine7.netlify.app
+```
+
+Backend API:
+
+```text
+https://smartdine-api-c2k7.onrender.com
+```
+
+Health check:
+
+```text
+https://smartdine-api-c2k7.onrender.com/api/health
+```
+
 ## Demo Accounts
 
 Admin:
