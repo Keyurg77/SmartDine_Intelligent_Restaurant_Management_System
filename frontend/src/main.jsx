@@ -8,8 +8,10 @@ import {
   LogOut,
   MessageCircle,
   CircleUserRound,
+  Moon,
   Search,
   ShoppingBag,
+  Sun,
   Utensils,
   X,
 } from 'lucide-react';
@@ -65,6 +67,7 @@ function App() {
   const [toast, setToast] = useState('');
   const [chatOpen, setChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
+  const [theme, setTheme] = useState(() => window.localStorage.getItem('smartdine-theme') || 'light');
   const [chatMessages, setChatMessages] = useState([
     { from: 'assistant', text: 'Hi, I am SmartDine Assistant. Ask me about menu items, ordering, spice level, or order status.' },
   ]);
@@ -76,6 +79,11 @@ function App() {
     loadCurrentUser();
     loadMenuData();
   }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem('smartdine-theme', theme);
+  }, [theme]);
 
   useEffect(() => {
     if (apiReady) return undefined;
@@ -296,11 +304,15 @@ function App() {
     submitAssistantMessage(text);
   }
 
+  function toggleTheme() {
+    setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+  }
+
   return (
     <div className="app-shell">
       <Sidebar activePage={activePage} setActivePage={setActivePage} currentUser={currentUser} logout={logout} cartCount={cartCount} />
       <main className="main-panel">
-        <Header currentUser={currentUser} />
+        <Header currentUser={currentUser} theme={theme} toggleTheme={toggleTheme} />
         {toast && <div className="toast" onClick={() => setToast('')}>{toast}</div>}
         {activePage === 'menu' && <MenuPage query={query} setQuery={setQuery} category={category} setCategory={setCategory} categories={categories} filteredMenu={filteredMenu} addToCart={addToCart} notice={notice} isAdmin={isAdmin} />}
         {activePage === 'orders' && <OrdersPage cart={cart} cartTotal={cartTotal} orders={orders} currentUser={currentUser} submitOrder={submitOrder} updateQuantity={updateQuantity} updateOrderStatus={updateOrderStatus} isAdmin={isAdmin} />}
@@ -330,8 +342,23 @@ function Sidebar({ activePage, setActivePage, currentUser, logout, cartCount }) 
   );
 }
 
-function Header({ currentUser }) {
-  return <section className="topbar"><div><h1>SmartDine Restaurant Management</h1><p className="header-copy">Browse the menu, place food orders, and manage kitchen status from one simple workspace.</p></div>{currentUser && <div className="status-pill"><span>{currentUser.fullName}</span><strong>{currentUser.role}</strong></div>}</section>;
+function Header({ currentUser, theme, toggleTheme }) {
+  const ThemeIcon = theme === 'dark' ? Sun : Moon;
+  return (
+    <section className="topbar">
+      <div>
+        <h1>SmartDine Restaurant Management</h1>
+        <p className="header-copy">Browse the menu, place food orders, and manage kitchen status from one simple workspace.</p>
+      </div>
+      <div className="topbar-actions">
+        <button className="theme-toggle" onClick={toggleTheme} type="button" aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}>
+          <ThemeIcon size={18} />
+          <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
+        </button>
+        {currentUser && <div className="status-pill"><span>{currentUser.fullName}</span><strong>{currentUser.role}</strong></div>}
+      </div>
+    </section>
+  );
 }
 
 function MenuPage({ query, setQuery, category, setCategory, categories, filteredMenu, addToCart, notice, isAdmin }) {
