@@ -352,7 +352,7 @@ function Sidebar({ activePage, setActivePage, currentUser, logout, cartCount }) 
   ].filter((link) => link.show);
   return (
     <aside className="sidebar">
-      <div className="brand-lockup"><span className="brand-mark">SD</span><div><strong>SmartDine</strong><small>Restaurant system</small></div></div>
+      <div className="brand-lockup"><img className="brand-mark" src="/logo.svg" alt="SmartDine logo" /><div><strong>SmartDine</strong><small>Restaurant system</small></div></div>
       <nav className="side-nav" aria-label="Application navigation">
         {links.map((link) => { const Icon = link.icon; return <button className={activePage === link.id ? 'active' : ''} key={link.id} onClick={() => setActivePage(link.id)} type="button"><Icon size={18} /><span>{link.label}</span>{link.id === 'orders' && cartCount > 0 && <strong className="nav-badge">{cartCount}</strong>}</button>; })}
         {currentUser && <button onClick={logout} type="button"><LogOut size={18} /><span>Logout</span></button>}
@@ -534,4 +534,7 @@ function playAddSound() {
 =======
 >>>>>>> Stashed changes
 createRoot(document.getElementById('root')).render(<App />);
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
