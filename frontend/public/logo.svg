@@ -1,0 +1,13 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">SmartDine logo</title>
+  <desc id="desc">A green SmartDine mark with a plate, fork, spoon, and SD initials.</desc>
+  <rect x="14" y="14" width="228" height="228" rx="54" fill="#F8FFFB"/>
+  <rect x="14" y="14" width="228" height="228" rx="54" stroke="#237557" stroke-width="12"/>
+  <circle cx="128" cy="124" r="58" fill="#EAF7F0" stroke="#237557" stroke-width="9"/>
+  <path d="M79 68V112" stroke="#15523C" stroke-width="9" stroke-linecap="round"/>
+  <path d="M65 68V95C65 105 71 112 79 112C87 112 93 105 93 95V68" stroke="#15523C" stroke-width="9" stroke-linecap="round"/>
+  <path d="M177 68C188 68 196 80 196 96C196 109 190 119 181 122V181" stroke="#15523C" stroke-width="9" stroke-linecap="round"/>
+  <path d="M108 92C116 80 132 76 146 82C139 94 124 99 108 92Z" fill="#39A77D" stroke="#15523C" stroke-width="6" stroke-linejoin="round"/>
+  <text x="128" y="151" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="54" font-weight="800" fill="#15523C" letter-spacing="1">SD</text>
+  <path d="M88 183C111 198 145 198 168 183" stroke="#237557" stroke-width="8" stroke-linecap="round"/>
+</svg>

@@ -104,15 +104,14 @@ button {
 }
 
 .brand-mark {
-  align-items: center;
   background: #ffffff;
-  border-radius: 8px;
-  color: var(--brand-strong);
-  display: inline-flex;
-  font-weight: 800;
-  height: 44px;
-  justify-content: center;
-  width: 44px;
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  display: block;
+  flex: 0 0 auto;
+  height: 46px;
+  object-fit: contain;
+  width: 46px;
 }
 
 .brand-lockup small {
@@ -825,7 +824,7 @@ h2 {
 }
 
 :root[data-theme='dark'] .brand-mark {
-  background: #dff8ec;
+  background: #ffffff;
 }
 
 :root[data-theme='dark'] .status-pill strong,
@@ -869,4 +868,3 @@ select:focus-visible {
 :root[data-theme='dark'] .chat-message.user {
   color: #ffffff;
 }
-
