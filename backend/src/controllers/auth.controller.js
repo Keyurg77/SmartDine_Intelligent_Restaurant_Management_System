@@ -19,13 +19,13 @@ const register = asyncHandler(async (req, res) => {
 
   if (!isNonEmpty(fullName) || !isEmail(email) || !isNonEmpty(password) || password.length < 8) {
     return res.status(400).json({
-      message: 'Full name, valid email, and password of at least 8 characters are required.',
+      message: 'Please enter your full name, a valid email address, and a password with at least 8 characters.',
     });
   }
 
   const [existingUsers] = await pool.execute('SELECT id FROM users WHERE email = ?', [email.trim()]);
   if (existingUsers.length > 0) {
-    return res.status(409).json({ message: 'An account already exists for this email.' });
+    return res.status(409).json({ message: 'This email is already registered. Please log in instead.' });
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
@@ -59,7 +59,7 @@ const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   if (!isEmail(email) || !isNonEmpty(password)) {
-    return res.status(400).json({ message: 'Valid email and password are required.' });
+    return res.status(400).json({ message: 'Please enter a valid email address and password.' });
   }
 
   const [users] = await pool.execute('SELECT * FROM users WHERE email = ? LIMIT 1', [
@@ -68,12 +68,12 @@ const login = asyncHandler(async (req, res) => {
 
   const user = users[0];
   if (!user || user.status !== 'active') {
-    return res.status(401).json({ message: 'Invalid login details.' });
+    return res.status(401).json({ message: 'Login failed. Please check your email and password.' });
   }
 
   const isValidPassword = await bcrypt.compare(password, user.password_hash);
   if (!isValidPassword) {
-    return res.status(401).json({ message: 'Invalid login details.' });
+    return res.status(401).json({ message: 'Login failed. Please check your email and password.' });
   }
 
   req.session.user = publicUser(user);
