@@ -145,3 +145,6 @@ vite.config.ts.timestamp-*
 # Local assessment documentation drafts - review before uploading
 /docs/
 
+# Local Codex artifact build output
+.codex-ppt-build/
+

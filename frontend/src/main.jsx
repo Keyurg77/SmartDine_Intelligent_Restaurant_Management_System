@@ -8,8 +8,10 @@ import {
   LogOut,
   MessageCircle,
   CircleUserRound,
+  Moon,
   Search,
   ShoppingBag,
+  Sun,
   Utensils,
   X,
 } from 'lucide-react';
@@ -30,8 +32,10 @@ const demoMenu = [
   { id: 5, name: 'Chocolate Brownie', categoryName: 'Desserts', description: 'Warm brownie with chocolate sauce.', price: 7, spiceLevel: 'none' },
 ];
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
+
 async function apiRequest(path, options = {}) {
-  const response = await fetch(`/api${path}`, {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
@@ -63,6 +67,7 @@ function App() {
   const [toast, setToast] = useState('');
   const [chatOpen, setChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
+  const [theme, setTheme] = useState(() => window.localStorage.getItem('smartdine-theme') || 'light');
   const [chatMessages, setChatMessages] = useState([
     { from: 'assistant', text: 'Hi, I am SmartDine Assistant. Ask me about menu items, ordering, spice level, or order status.' },
   ]);
@@ -74,6 +79,11 @@ function App() {
     loadCurrentUser();
     loadMenuData();
   }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem('smartdine-theme', theme);
+  }, [theme]);
 
   useEffect(() => {
     if (apiReady) return undefined;
@@ -273,20 +283,11 @@ function App() {
     setChatInput('');
     setChatMessages((messages) => [...messages, { from: 'user', text }]);
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
     try {
       const result = await apiRequest('/chatbot/message', {
         method: 'POST',
         body: JSON.stringify({ message: text }),
       });
-<<<<<<< Updated upstream
-      setChatMessages((messages) => [...messages, { from: 'assistant', options: result.options || [], text: result.reply }]);
-    } catch (error) {
-      setChatMessages((messages) => [...messages, { from: 'assistant', text: createAssistantReply(text) }]);
-=======
       setChatMessages((messages) => [
         ...messages,
         { from: 'assistant', options: result.options || [], text: result.reply },
@@ -296,42 +297,22 @@ function App() {
         ...messages,
         { from: 'assistant', text: createAssistantReply(text) },
       ]);
->>>>>>> Stashed changes
     }
   }
 
   function sendQuickAssistantMessage(text) {
     submitAssistantMessage(text);
   }
-<<<<<<< Updated upstream
-=======
-try {
-  const result = await apiRequest('/chatbot/message', {
-    method: 'POST',
-    body: JSON.stringify({ message: text }),
-  });
-  setChatMessages((messages) => [
-    ...messages,
-    { from: 'assistant', options: result.options || [], text: result.reply },
-  ]);
-} catch (error) {
-  setChatMessages((messages) => [
-    ...messages,
-    { from: 'assistant', text: createAssistantReply(text) },
-  ]);
-}
-function sendQuickAssistantMessage(text) {
-  submitAssistantMessage(text);
-}
->>>>>>> 080f34c2e10f12debcf7d49c3d75fdbca57d857b
-=======
->>>>>>> Stashed changes
+
+  function toggleTheme() {
+    setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+  }
 
   return (
     <div className="app-shell">
       <Sidebar activePage={activePage} setActivePage={setActivePage} currentUser={currentUser} logout={logout} cartCount={cartCount} />
       <main className="main-panel">
-        <Header currentUser={currentUser} />
+        <Header currentUser={currentUser} theme={theme} toggleTheme={toggleTheme} />
         {toast && <div className="toast" onClick={() => setToast('')}>{toast}</div>}
         {activePage === 'menu' && <MenuPage query={query} setQuery={setQuery} category={category} setCategory={setCategory} categories={categories} filteredMenu={filteredMenu} addToCart={addToCart} notice={notice} isAdmin={isAdmin} />}
         {activePage === 'orders' && <OrdersPage cart={cart} cartTotal={cartTotal} orders={orders} currentUser={currentUser} submitOrder={submitOrder} updateQuantity={updateQuantity} updateOrderStatus={updateOrderStatus} isAdmin={isAdmin} />}
@@ -361,8 +342,23 @@ function Sidebar({ activePage, setActivePage, currentUser, logout, cartCount }) 
   );
 }
 
-function Header({ currentUser }) {
-  return <section className="topbar"><div><h1>SmartDine Restaurant Management</h1><p className="header-copy">Browse the menu, place food orders, and manage kitchen status from one simple workspace.</p></div>{currentUser && <div className="status-pill"><span>{currentUser.fullName}</span><strong>{currentUser.role}</strong></div>}</section>;
+function Header({ currentUser, theme, toggleTheme }) {
+  const ThemeIcon = theme === 'dark' ? Sun : Moon;
+  return (
+    <section className="topbar">
+      <div>
+        <h1>SmartDine Restaurant Management</h1>
+        <p className="header-copy">Browse the menu, place food orders, and manage kitchen status from one simple workspace.</p>
+      </div>
+      <div className="topbar-actions">
+        <button className="theme-toggle" onClick={toggleTheme} type="button" aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}>
+          <ThemeIcon size={18} />
+          <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
+        </button>
+        {currentUser && <div className="status-pill"><span>{currentUser.fullName}</span><strong>{currentUser.role}</strong></div>}
+      </div>
+    </section>
+  );
 }
 
 function MenuPage({ query, setQuery, category, setCategory, categories, filteredMenu, addToCart, notice, isAdmin }) {
@@ -501,11 +497,6 @@ function createAssistantReply(question) {
   if (text.includes('admin')) return 'Admins can manage menu items and update order status from the admin dashboard.';
   return 'I can help with menu search, ordering steps, order status, spice levels, and admin support.';
 }
-
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
 function playAddSound() {
   try {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -527,14 +518,4 @@ function playAddSound() {
     // Audio feedback is optional and may be blocked by browser settings.
   }
 }
-
-<<<<<<< Updated upstream
-=======
->>>>>>> 080f34c2e10f12debcf7d49c3d75fdbca57d857b
-=======
->>>>>>> Stashed changes
 createRoot(document.getElementById('root')).render(<App />);
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
