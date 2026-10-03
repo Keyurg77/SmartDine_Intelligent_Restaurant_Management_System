@@ -64,7 +64,7 @@ const listMenuItems = asyncHandler(async (req, res) => {
 const getMenuItem = asyncHandler(async (req, res) => {
   const id = toPositiveInteger(Number(req.params.id));
   if (!id) {
-    return res.status(400).json({ message: 'Valid menu item id is required.' });
+    return res.status(400).json({ message: 'Please provide a valid menu item id.' });
   }
 
   const [items] = await pool.execute(
@@ -86,7 +86,7 @@ const getMenuItem = asyncHandler(async (req, res) => {
   );
 
   if (!items[0]) {
-    return res.status(404).json({ message: 'Menu item not found.' });
+    return res.status(404).json({ message: 'Menu item was not found or is no longer available.' });
   }
 
   return res.json({ item: items[0] });
@@ -134,7 +134,7 @@ const updateMenuItem = asyncHandler(async (req, res) => {
   const payload = parseMenuPayload(req.body);
 
   if (!id) {
-    return res.status(400).json({ message: 'Valid menu item id is required.' });
+    return res.status(400).json({ message: 'Please provide a valid menu item id.' });
   }
 
   if (payload.error) {
@@ -160,7 +160,7 @@ const updateMenuItem = asyncHandler(async (req, res) => {
   );
 
   if (result.affectedRows === 0) {
-    return res.status(404).json({ message: 'Menu item not found.' });
+    return res.status(404).json({ message: 'Menu item was not found, so no update was made.' });
   }
 
   await logActivity({
@@ -177,13 +177,13 @@ const updateMenuItem = asyncHandler(async (req, res) => {
 const deleteMenuItem = asyncHandler(async (req, res) => {
   const id = toPositiveInteger(Number(req.params.id));
   if (!id) {
-    return res.status(400).json({ message: 'Valid menu item id is required.' });
+    return res.status(400).json({ message: 'Please provide a valid menu item id.' });
   }
 
   const [result] = await pool.execute('UPDATE menu_items SET is_available = FALSE WHERE id = ?', [id]);
 
   if (result.affectedRows === 0) {
-    return res.status(404).json({ message: 'Menu item not found.' });
+    return res.status(404).json({ message: 'Menu item was not found, so it could not be removed.' });
   }
 
   await logActivity({
@@ -204,11 +204,11 @@ function parseMenuPayload(body) {
   const spiceLevel = String(body.spiceLevel || 'none').trim();
 
   if (!categoryId || !isNonEmpty(name) || !price) {
-    return { error: 'Category, name, and positive price are required.' };
+    return { error: 'Please choose a category, enter a menu item name, and use a price greater than 0.' };
   }
 
   if (!allowedSpiceLevels.has(spiceLevel)) {
-    return { error: 'Invalid spice level.' };
+    return { error: 'Please choose one of the supported spice levels: none, mild, medium, or hot.' };
   }
 
   return {
