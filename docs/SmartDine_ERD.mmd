@@ -1,0 +1,84 @@
+erDiagram
+  USERS ||--o{ ORDERS : places
+  USERS ||--o{ ACTIVITY_LOGS : performs
+  USERS ||--o{ MENU_ITEMS : creates
+  USERS ||--o{ MENU_ITEMS : updates
+  CATEGORIES ||--o{ MENU_ITEMS : contains
+  ORDERS ||--o{ ORDER_ITEMS : includes
+  MENU_ITEMS ||--o{ ORDER_ITEMS : selected_in
+
+  USERS {
+    int id PK
+    varchar full_name
+    varchar email UK
+    varchar password_hash
+    enum role
+    enum status
+    timestamp created_at
+    timestamp updated_at
+  }
+
+  CATEGORIES {
+    int id PK
+    varchar name UK
+    varchar description
+    boolean is_active
+    timestamp created_at
+    timestamp updated_at
+  }
+
+  MENU_ITEMS {
+    int id PK
+    int category_id FK
+    varchar name
+    text description
+    decimal price
+    varchar image_url
+    boolean is_available
+    enum spice_level
+    int created_by FK
+    int updated_by FK
+    timestamp created_at
+    timestamp updated_at
+  }
+
+  ORDERS {
+    int id PK
+    int user_id FK
+    varchar order_number UK
+    enum status
+    decimal total_amount
+    varchar customer_note
+    timestamp created_at
+    timestamp updated_at
+  }
+
+  ORDER_ITEMS {
+    int id PK
+    int order_id FK
+    int menu_item_id FK
+    int quantity
+    decimal unit_price
+    decimal line_total
+  }
+
+  CHATBOT_RULES {
+    int id PK
+    varchar intent
+    varchar keywords
+    text response_template
+    boolean is_database_aware
+    boolean is_active
+    timestamp created_at
+    timestamp updated_at
+  }
+
+  ACTIVITY_LOGS {
+    int id PK
+    int user_id FK
+    varchar action
+    varchar entity_type
+    int entity_id
+    varchar details
+    timestamp created_at
+  }
