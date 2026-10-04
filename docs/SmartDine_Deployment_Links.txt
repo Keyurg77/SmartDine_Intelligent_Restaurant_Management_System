@@ -1,0 +1,13 @@
+SmartDine Deployment Links
+
+Frontend Live Website:
+https://smartdine7.netlify.app/
+
+Backend API:
+https://smartdine-api-c2k7.onrender.com
+
+Backend Health Check:
+https://smartdine-api-c2k7.onrender.com/api/health
+
+Database Hosting:
+Aiven MySQL
